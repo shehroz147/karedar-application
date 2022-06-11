@@ -49,7 +49,7 @@ export default function App() {
                     drawerPosition="left"
                     drawerContent={(props) => <CustomDrawerContent {...props} />}
                     drawerIcon
-                    initialRouteName="Home"
+                    initialRouteName="Signup"
                     screenOptions={{
                         headerTitle: "Services"
                     }
@@ -58,6 +58,8 @@ export default function App() {
                     <Drawer.Screen name="Home" component={Services} />
                     <Drawer.Screen name="HomePage" component={HomePage}
                     />
+                    <Drawer.Screen name="Signup" component={Signup}/>
+                    <Drawer.Screen name="Login" component={Login}/>
                     <Drawer.Screen name="AddServices" component={MessServices} />
                     <Drawer.Screen name="ActiveService" component={ActiveService} />
                     <Drawer.Screen name="OrderList" component={OrderList}

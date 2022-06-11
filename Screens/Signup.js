@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-    View, Text, TextInput, Button, Image, StyleSheet, Pressable
+    View, Text, TextInput, Button, Image, StyleSheet, Pressable,Alert
 } from "react-native";
 import 'react-native-gesture-handler'
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,16 +16,19 @@ export default function Signup({ navigation }) {
     const signUp = async () => {
         const params = {
             email: email,
-            firstName: 'shehroz',
+            firstName: firstName, //...?
             lastName: lastName,
             password: password
         }
         console.log(params);
         // console.log(server);
         const response = await server.post('User/register', params);
-        navigation.navigate("Login");
-
-        console.log(response);
+        if(response.status == 200)
+        {
+            console.log("if is running with okey status")
+            navigation.navigate("Login");
+        }
+        console.log("response is ",response);
     }
 
 
@@ -54,19 +57,19 @@ export default function Signup({ navigation }) {
                             width: '90%',
                             alignSelf: 'center'
                         }}>
-
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={setLastName}
-                                // value={lastName}
-                                placeholder="Last Name"
-                            />
                             <TextInput
                                 style={styles.input}
                                 onChangeText={setFirstName}
                                 // value={firstName}
                                 placeholder="First Name"
                             />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setLastName}
+                                // value={lastName}
+                                placeholder="Last Name"
+                            />
+                            
                             <TextInput
                                 style={styles.input}
                                 onChangeText={setEmail}
