@@ -15,7 +15,7 @@ import server from '../Component/server'
 import * as Location from 'expo-location';
 
 // import Checkbox from 'expo-checkbox';
-export default function AddServices({ params }) {
+export default function EditKitchen({ params }) {
     const [locationServiceEnabled, setLocationServiceEnabled] = React.useState(false);
     const [address, setAddress] = React.useState([]);
 
@@ -107,6 +107,8 @@ export default function AddServices({ params }) {
                 //   data:data
                 // }); 
                 // };
+
+
             }
         }
     }
@@ -135,9 +137,12 @@ export default function AddServices({ params }) {
                     }}>
                         <Image
                             style={{
-                                alignSelf: 'center'
+                                alignSelf: 'center',
+                                width: 90, height: 90,
+                                borderRadius: 36
+
                             }}
-                            source={edit}
+                            source={{ uri: 'https://media.istockphoto.com/photos/modern-restaurant-interior-design-picture-id1211547141?k=20&m=1211547141&s=612x612&w=0&h=KiZX3NBZVCK4MlSh4BJ8hZNSJcTIMbNSSV2yusw2NmM=' }}
                         />
                     </View>
                     <View style={{
@@ -158,6 +163,20 @@ export default function AddServices({ params }) {
                             value={service}
                             placeholder="Enter Address"
                         />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={setKitchen}
+                            value={kitchen}
+                            placeholder="Kitchen Charges"
+                        />
+
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={setKitchen}
+                            value={kitchen}
+                            placeholder="+ Add Dish"
+                        />
+
                         {/* <TextInput
                             style={styles.input}
                             onChangeText={setCharges}

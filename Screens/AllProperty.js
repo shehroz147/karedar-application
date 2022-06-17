@@ -16,7 +16,7 @@ import map from '../assets/map.png';
 import { Divider } from "react-native-paper";
 import server from "../Component/server";
 import { ScrollView } from "react-native-gesture-handler";
-export default function HomePage({ navigation }) {
+export default function AllProperty({ navigation }) {
     const [allKitchen, setAllKitchen] = useState([]);
 
     const getKitchen = async () => {
@@ -44,7 +44,7 @@ export default function HomePage({ navigation }) {
                     fontSize: 20,
                     fontWeight: 'bold',
                     marginBottom: 20
-                }}>All Kitchens</Text>
+                }}>All Available Property</Text>
                 <FlatList
                     keyExtractor={(item) => item._id}
                     data={allKitchen}
@@ -56,7 +56,7 @@ export default function HomePage({ navigation }) {
                             <View style={{ display: 'flex', flexDirection: 'column' }} >
                                 <Pressable
                                     onPress={() => {
-                                        navigation.navigate('RequestScreen', { kitchen: item })
+                                        navigation.navigate('ShowProperty', { property: item })
                                     }}>
                                     <Image style={{
                                         width: 140,
@@ -66,8 +66,9 @@ export default function HomePage({ navigation }) {
                                         // source={require(`${item?.profileImage}`)}
                                         source={{ uri: 'https://media.istockphoto.com/photos/modern-restaurant-interior-design-picture-id1211547141?k=20&m=1211547141&s=612x612&w=0&h=KiZX3NBZVCK4MlSh4BJ8hZNSJcTIMbNSSV2yusw2NmM=' }}
                                     />
-                                    <Text>{item.name}</Text>
-                                    <Text>{item.address}</Text>
+                                    <Text>Nishat Hotel</Text>
+                                    <Text>15 Marla</Text>
+                                    <Text>Rent: 50,000 Rs</Text>
                                 </Pressable>
                             </View>
                         );

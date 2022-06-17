@@ -6,18 +6,29 @@ import 'react-native-gesture-handler'
 import { SafeAreaView } from "react-native-safe-area-context";
 import curve from '../assets/curve.png';
 import server from "../Component/server";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 export default function Login({ navigation }) {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
-
+    let [id, setId] = useState('');
     const Login = async () => {
         const params = {
             email: email,
             password: password
         }
         const response = await server.post("User/login", params);
-        navigation.navigate("Home")
-        console.log(response);
+        console.log(response.data.userInfo._id)
+        setId(response.data.userInfo._id);
+
+        await AsyncStorage.setItem("userId", JSON.stringify(response.data.userInfo._id));
+        let _id = await AsyncStorage.getItem("userId");
+        let id = JSON.parse(_id);
+        // console.log(id);
+
+        navigation.navigate("Home", id)
+        console.log(response.data.userInfo._id);
     }
 
     return (

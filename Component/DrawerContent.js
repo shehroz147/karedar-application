@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { FlatList, Text } from "react-native";
 // import { useSelector, useDispatch } from "react-redux";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { loggedInUser, signOut } from "../Actions";
@@ -18,11 +19,30 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { View } from "react-native";
 
 export default function CustomDrawerContent(props) {
+    const DATA = [
+        {
+            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+            title: 'Become Mess Provider',
+        },
+        {
+            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+            title: 'Become Property Provider',
+        },
 
+    ];
     useEffect(() => {
 
     });
+    const showValue = () => {
 
+    }
+
+    const Item = ({ title }) => (
+        <View >
+            <Text >{title}</Text>
+        </View>
+    );
+    const renderItem = ({ item }) => <Item title={item.title} />;
     return (
         <>
             <DrawerContentScrollView {...props}>
@@ -43,6 +63,7 @@ export default function CustomDrawerContent(props) {
                         <AntDesign name="home" size={24} color="green" />
                     )}
                     label="Home"
+
                     onPress={() => {
                         props.navigation.navigate("Home");
                     }}
@@ -51,20 +72,58 @@ export default function CustomDrawerContent(props) {
                     icon={({ color, size }) => (
                         <AntDesign name="home" size={24} color="green" />
                     )}
-                    label="Become a Service Provider"
+                    label="MyKitchen"
                     onPress={() => {
-                        props.navigation.navigate("AddServices");
+                        props.navigation.navigate("MyKitchen");
                     }}
                 />
+
                 <DrawerItem
                     icon={({ color, size }) => (
                         <AntDesign name="home" size={24} color="green" />
                     )}
-                    label="Active Services"
+                    label="Become a Service Provider"
                     onPress={() => {
-                        props.navigation.navigate("ActiveService");
-                    }}
+                        props.navigation.navigate('AddProperty')
+                    }
+                    }
                 />
+
+                <DrawerItem
+                    icon={({ color, size }) => (
+                        <AntDesign name="home" size={24} color="green" />
+                    )}
+                    label="Favourite"
+                    onPress={() => {
+                        props.navigation.navigate('Favourite')
+                    }
+                    }
+                />
+
+                <DrawerItem
+                    icon={({ color, size }) => (
+                        <AntDesign name="home" size={24} color="green" />
+                    )}
+                    label="AllProperty"
+                    onPress={() => {
+                        props.navigation.navigate('AllProperty')
+                    }
+                    }
+                />
+
+
+
+                <DrawerItem
+                    icon={({ color, size }) => (
+                        <AntDesign name="home" size={24} color="green" />
+                    )}
+                    label="MessServices"
+                    onPress={() => {
+                        props.navigation.navigate('MessServices')
+                    }
+                    }
+                />
+
                 <DrawerItem
                     icon={({ color, size }) => (
                         <AntDesign name="home" size={24} color="green" />

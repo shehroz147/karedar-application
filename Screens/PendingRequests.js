@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View, Text, TextInput, Button, Image, StyleSheet, Pressable
 } from "react-native";
@@ -19,10 +19,25 @@ import kazmi from '../assets/kazmi.png';
 import sonam from '../assets/sonam.png';
 import ap from '../assets/ap.png';
 import cross from '../assets/cross.png';
+import server from "../Component/server";
+export default function PendingRequests({ route }) {
+    const [requests, setRequest] = useState([]);
+    const { kitchenId } = route.params;
 
+    const getPendingRequest = async () => {
+        const data = {
+            kitchenId: '628fb949edbf5eedd30de2f2'
+        }
+        const response = await server.post('RequestKitchen/UserRequest/', data);
+        console.log(response.data)
+        setRequest(response.data)
+    }
+    useEffect(() => {
+        // CheckIfLocationEnabled();
+        // alert(JSON.stringify(cart))
+        getPendingRequest();
 
-export default function PendingRequests({ navigation }) {
-
+    }, []);
     return (
         <>
             <SafeAreaView>
@@ -33,235 +48,76 @@ export default function PendingRequests({ navigation }) {
                         justifyContent: 'center',
                         fontSize: 14,
                         fontWeight: '400'
-                    }}>Pending Requests (4)</Text>
+                    }}>Pending Requests</Text>
+                    <View style={
+                        {
+                            flex: 1
+                        }
+                    }>
+                        {requests.map((data, index) =>
+                            <View key={index} style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                left: '2%',
+                                top: '4%',
+                                width: '90%',
+                                marginBottom: 20,
+                            }}>
+                                <Image
+                                    source={data?.user.profileImage}
+                                    style={{
+                                        width: 80, height: 80
+                                    }} />
+                                <View style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}>
+                                    <Text style={{
+                                        fontWeight: 'bold',
+                                        color: 'black'
+                                    }}>{data.user.firstName} {data.user.lastName}</Text>
+                                    <Text style={{
+                                    }}>{data.user.address}</Text>
 
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        left: '2%',
-                        top: '4%',
-                        width: '90%',
-                        marginBottom: 20,
-                    }}>
-                        <Image
-                            source={kazmi} />
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={{
-                                fontWeight: 'bold'
-                            }}>Ahmad Kazmi Prince</Text>
-                            <Text style={{
-                            }}>2nd Floor UCP</Text>
-
-                        </View>
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignContent: 'flex-end'
-                        }}>
-                            <Pressable style={{
-                                backgroundColor: '#3DEB00',
-                                borderRadius: 36,
-                                // width: '40%'
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
+                                </View>
+                                <View style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    alignContent: 'flex-end'
                                 }}>
-                                    Accept
-                                </Text>
-                            </Pressable>
-                            <Pressable style={{
-                                backgroundColor: '#C4C4C4',
-                                borderRadius: 36,
-                                width: '100%',
-                                paddingLeft: 10,
-                                paddingRight: 10
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Details
-                                </Text>
-                            </Pressable>
-                        </View>
-                        <Image
-                            source={cross} />
-                    </View>
-
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        left: '2%',
-                        top: '4%',
-                        width: '90%',
-                        justifyContent: 'space-between',
-                        marginBottom: 20
-                    }}>
-                        <Image
-                            source={sonam} />
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={{
-                                fontWeight: 'bold'
-                            }}>Sonam Bajwa</Text>
-                            <Text style={{
-                            }}> Banigalah, Islamabad</Text>
-                        </View>
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between'
-                        }}>
-                            <Pressable style={{
-                                backgroundColor: '#3DEB00',
-                                borderRadius: 36,
-                                width: '100%'
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Accept
-                                </Text>
-                            </Pressable>
-                            <Pressable style={{
-                                backgroundColor: '#C4C4C4',
-                                borderRadius: 36,
-                                width: '100%',
-                                paddingLeft: 10,
-                                paddingRight: 10
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Details
-                                </Text>
-                            </Pressable>
-                        </View>
-                        <Image
-                            source={cross} />
-                    </View>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        left: '2%',
-                        top: '4%',
-                        justifyContent: 'space-between',
-                        width: '90%',
-                        marginBottom: 20
-                    }}>
-                        <Image
-                            source={ap} />
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={{
-                                fontWeight: 'bold'
-                            }}>Ap Dhillon</Text>
-                            <Text style={{
-                            }}> Banigalah, Islamabad</Text>
-                        </View>
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between'
-                        }}>
-                            <Pressable style={{
-                                backgroundColor: '#3DEB00',
-                                borderRadius: 36,
-                                width: '100%'
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Accept
-                                </Text>
-                            </Pressable>
-                            <Pressable style={{
-                                backgroundColor: '#C4C4C4',
-                                borderRadius: 36,
-                                width: '100%',
-                                paddingLeft: 10,
-                                paddingRight: 10
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Details
-                                </Text>
-                            </Pressable>
-                        </View>
-                        <Image
-                            source={cross} />
-                    </View>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        width: '90%',
-                        left: '2%',
-                        top: '4%',
-                        marginBottom: 20
-                    }}>
-                        <Image
-                            source={imranKhan} />
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={{
-                                fontWeight: 'bold'
-                            }}>Imran Khan</Text>
-                            <Text style={{
-                            }}>Banigalah, Islamabad </Text>
-
-                        </View>
-                        <View style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            flexDirection: 'column'
-                        }}>
-                            <Pressable style={{
-                                backgroundColor: '#3DEB00',
-                                borderRadius: 36,
-                                width: '100%'
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Accept
-                                </Text>
-                            </Pressable>
-                            <Pressable style={{
-                                backgroundColor: '#C4C4C4',
-                                borderRadius: 36,
-                                width: '100%',
-                                paddingRight: 10,
-                                paddingLeft: 10
-                            }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: '#FFFFFF'
-                                }}>
-                                    Details
-                                </Text>
-                            </Pressable>
-                        </View>
-                        <Image
-                            source={cross} />
+                                    <Pressable style={{
+                                        backgroundColor: '#3DEB00',
+                                        borderRadius: 36,
+                                        // width: '40%'
+                                    }}>
+                                        <Text style={{
+                                            textAlign: 'center',
+                                            color: '#FFFFFF'
+                                        }}>
+                                            Accept
+                                        </Text>
+                                    </Pressable>
+                                    <Pressable style={{
+                                        backgroundColor: '#C4C4C4',
+                                        borderRadius: 36,
+                                        width: '100%',
+                                        paddingLeft: 10,
+                                        paddingRight: 10
+                                    }}>
+                                        <Text style={{
+                                            textAlign: 'center',
+                                            color: '#FFFFFF'
+                                        }}>
+                                            Details
+                                        </Text>
+                                    </Pressable>
+                                </View>
+                                <Image
+                                    source={cross} />
+                            </View>
+                        )}
                     </View>
 
 

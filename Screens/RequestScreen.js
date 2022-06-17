@@ -15,7 +15,22 @@ import navBar from '../assets/navBar.png';
 import map from '../assets/map.png';
 import { Divider } from "react-native-paper";
 import request from '../assets/request.png';
-export default function RequestScreen({ navigation }) {
+import server from "../Component/server";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export default function RequestScreen({ navigation, route }) {
+    const { kitchen } = route.params;
+
+    const requestKitchen = async () => {
+        let id = await AsyncStorage.getItem('userId');
+        const _id = JSON.parse(id);
+        const data = {
+            kitchenId: kitchen._id,
+            userId: id
+        }
+        const response = await server.post('RequestKitchen/', data)
+        console.log(response);
+    }
+
 
     return (
         <>
@@ -33,16 +48,25 @@ export default function RequestScreen({ navigation }) {
                     }}>
 
                         <Image
-                            source={request} />
+                            source={{ uri: 'https://media.istockphoto.com/photos/modern-restaurant-interior-design-picture-id1211547141?k=20&m=1211547141&s=612x612&w=0&h=KiZX3NBZVCK4MlSh4BJ8hZNSJcTIMbNSSV2yusw2NmM=' }}
+                            style={{
+                                height: 150, width: 200
+                            }} />
                         <View style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-between',
                             marginLeft: 30
                         }}>
-                            <Text style={{ marginLeft: '-10%' }} >House Kitchen</Text>
-                            <Text style={{ marginLeft: '-10%', backgroundColor: '#FFC700', borderRadius: 36, textAlign: 'center' }}>Requested</Text>
-                            <Text style={{ marginLeft: '-10%', fontSize: 8 }}>You will be notified after approval</Text>
+                            <Text style={{ marginLeft: '10%' }} >{kitchen?.name}</Text>
+                            <Text style={{ marginLeft: '10%', marginTop: 20 }}>{kitchen?.address}</Text>
+                            <Pressable style={{
+                                backgroundColor: 'black',
+                                width: '50%',
+                                borderRadius: 36,
+                                left: '15%',
+                                top: '10%'
+                            }}
+                                onPress={requestKitchen}><Text style={{ color: 'white', padding: 10, textAlign: 'center' }}>Request</Text></Pressable>
                         </View>
                     </View>
 

@@ -21,17 +21,6 @@ export default function Paynow({ navigation }) {
         <>
             <SafeAreaView>
                 <View style={styles.container}>
-                    <View style={styles.navbar}>
-                        <Image
-                            source={navTop} />
-                        <Text style={{
-                            fontSize: 18
-                        }}>Kareydar</Text>
-                        <Image
-                            source={navBar} />
-                    </View>
-                    <Divider />
-
 
                     <View style={{
                         display: 'flex',

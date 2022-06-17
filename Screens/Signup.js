@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-    View, Text, TextInput, Button, Image, StyleSheet, Pressable,Alert
+    View, Text, TextInput, Button, Image, StyleSheet, Pressable, Alert
 } from "react-native";
 import 'react-native-gesture-handler'
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,12 +23,14 @@ export default function Signup({ navigation }) {
         console.log(params);
         // console.log(server);
         const response = await server.post('User/register', params);
-        if(response.status == 200)
-        {
+        if (response.status == 200) {
             console.log("if is running with okey status")
             navigation.navigate("Login");
         }
-        console.log("response is ",response);
+        else {
+            alert("Sign up Failed")
+        }
+        console.log("response is ", response);
     }
 
 
@@ -69,7 +71,7 @@ export default function Signup({ navigation }) {
                                 // value={lastName}
                                 placeholder="Last Name"
                             />
-                            
+
                             <TextInput
                                 style={styles.input}
                                 onChangeText={setEmail}
@@ -101,7 +103,10 @@ export default function Signup({ navigation }) {
                                 margin: 10,
                                 alignSelf: 'center'
                             }}
-                            >Already have an account? Login</Text>
+                            >Already have an account?
+                            </Text>
+                            <Pressable onPress={() => { navigation.navigate('Login') }}><Text>Login</Text></Pressable>
+
                         </View>
                     </View>
                 </View>

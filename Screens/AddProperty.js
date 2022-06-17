@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View, Text, TextInput, Button, Image, StyleSheet, Pressable
 } from "react-native";
@@ -19,42 +19,156 @@ import kazmi from '../assets/kazmi.png';
 import sonam from '../assets/sonam.png';
 import ap from '../assets/ap.png';
 import cross from '../assets/cross.png';
-
-
+import server from "../Component/server";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function AddProperty({ navigation }) {
+    const [userData, setUserData] = useState([]);
 
+    const getUser = async () => {
+
+        let id = await AsyncStorage.getItem('userId');
+        let _id = JSON.parse(id);
+        const data = {
+            id: _id
+        }
+        const response = await server.post('User/GetById', data)
+        console.log(response.data);
+
+        setUserData(response.data.userInfo);
+    }
+
+    useEffect(() => {
+        getUser();
+
+    }, []);
+
+
+    const becomeProvider = async () => {
+        let id = await AsyncStorage.getItem('userId');
+        let _id = JSON.parse(id);
+        const data = {
+            user: _id
+        }
+        const response = await server.post('MessProviderRequest/', data);
+        console.log(response.data);
+        alert(response.data);
+    }
+
+    const becomePropertyProvider = async () => {
+        let id = await AsyncStorage.getItem('userId');
+        let _id = JSON.parse(id);
+        const data = {
+            user: _id
+        }
+        const response = await server.post('PropertyProviderRequest/', data);
+        console.log(response.data);
+        alert(response.data);
+    }
     return (
         <>
             <SafeAreaView>
                 <View style={styles.container}>
-                    <View style={styles.navbar}>
-                        <Image
-                            source={navTop} />
-                        <Text style={{
-                            fontSize: 18
-                        }}>Kareydar</Text>
-                        <Image
-                            source={navBar} />
-                    </View>
-                    <Divider />
 
-                    <Pressable style={{
-                        backgroundColor: '#E5E5E5',
-                        borderRadius: 36,
-                        width: '30%',
-                        alignSelf: 'center',
-                        top: '5%'
-                    }}>
-                        <Text style={{
-                            color: '#575757',
-                            textAlign: 'center',
-                            padding: 10
+
+                    {userData?.providor.includes('Mess') ?
+                        (
+
+                            <View>
+                                <Pressable style={{
+                                    backgroundColor: '#E5E5E5',
+                                    borderRadius: 36,
+                                    width: '60%',
+                                    alignSelf: 'center',
+                                    top: '5%'
+                                }}
+                                    onPress={() => { navigation.navigate('Kitchen') }}
+                                >
+                                    <Text style={{
+                                        color: '#575757',
+                                        textAlign: 'center',
+                                        padding: 10
+                                    }}>
+                                        Go To Kitchen
+                                    </Text>
+
+                                </Pressable>
+                            </View>
+
+                        ) : (
+                            <View>
+                                <Pressable style={{
+                                    backgroundColor: '#E5E5E5',
+                                    borderRadius: 36,
+                                    width: '60%',
+                                    alignSelf: 'center',
+                                    top: '5%'
+                                }}
+                                    onPress={becomeProvider}
+                                >
+                                    <Text style={{
+                                        color: '#575757',
+                                        textAlign: 'center',
+                                        padding: 10
+                                    }}>
+                                        Become Mess Providor
+                                    </Text>
+
+                                </Pressable>
+                            </View>)}
+
+
+
+                    {userData?.providor.includes('Property') ? (
+                        <View style={{
+                            margin: 20
                         }}>
-                            + Add Property
-                        </Text>
+                            <Pressable style={{
+                                backgroundColor: '#E5E5E5',
+                                borderRadius: 36,
+                                width: '60%',
+                                alignSelf: 'center',
+                                top: '5%'
+                            }}
+                                onPress={navigation.navigate('AddingProperty')}
+                            >
+                                <Text style={{
+                                    color: '#575757',
+                                    textAlign: 'center',
+                                    padding: 10
+                                }}>
+                                    Go to Property
+                                </Text>
 
+                            </Pressable>
+                        </View>
 
-                    </Pressable>
+                    ) : (
+                        <View style={{
+                            margin: 20
+                        }}>
+                            <Pressable style={{
+                                backgroundColor: '#E5E5E5',
+                                borderRadius: 36,
+                                width: '60%',
+                                alignSelf: 'center',
+                                top: '5%'
+                            }}
+                                onPress={
+                                    becomePropertyProvider
+                                }
+                            >
+                                <Text style={{
+                                    color: '#575757',
+                                    textAlign: 'center',
+                                    padding: 10
+                                }}>
+                                    Become Property Provider
+
+                                </Text>
+
+                            </Pressable>
+                        </View>)}
+
 
                 </View>
             </SafeAreaView>
@@ -79,7 +193,8 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: 'white',
-        height: '100%',
-        width: '100%'
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
     }
 });

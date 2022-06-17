@@ -21,16 +21,6 @@ export default function HouseKitchen({ navigation }) {
         <>
             <SafeAreaView>
                 <View style={styles.container}>
-                    <View style={styles.navbar}>
-                        <Image
-                            source={navTop} />
-                        <Text style={{
-                            fontSize: 18
-                        }}>Kareydar</Text>
-                        <Image
-                            source={navBar} />
-                    </View>
-                    <Divider />
                     <Text style={{
                         textAlign: 'center',
                         margin: 10,

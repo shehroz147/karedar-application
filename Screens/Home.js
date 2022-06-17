@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View, Text, TextInput, Button, Image, StyleSheet, Pressable
 } from "react-native";
@@ -10,20 +10,20 @@ import Navbar from "../Component/Navbar";
 import navTop from '../assets/navTop.png';
 import navBar from '../assets/navBar.png';
 import { Divider } from "react-native-paper";
-export default function Home({ navigation }) {
+export default function Home({ params }) {
+    useEffect(() => {
+        // CheckIfLocationEnabled();
+        // alert(JSON.stringify(cart))
+
+        console.log(params)
+
+    }, []);
+
 
     return (
         <>
             <SafeAreaView>
                 <View style={styles.container}>
-                    <View style={styles.navbar}>
-                        <Image
-                            source={navTop} />
-                        <Text>Kareydar</Text>
-                        <Image
-                            source={navBar} />
-                    </View>
-                    <Divider />
                 </View>
             </SafeAreaView>
         </>
